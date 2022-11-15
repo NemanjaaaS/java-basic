@@ -1,32 +1,22 @@
 import java.util.Arrays;
 import java.util.HashMap;
 
-
 public class SolutionAll {
-
-    //String S = "BAXXLXLON";
-    String s;
-    String rec;
-
-    public SolutionAll(String S,String Rec) {
-        s = S;
-        rec = Rec;
+    String inputString;
+    String wantedWord;
+    public SolutionAll(String iString,String word) {
+        inputString = iString;
+        wantedWord = word;
     }
-
-
     public int solution(String S,String Rec){
         int result = 0;
-        s = s.toUpperCase();
+        inputString = inputString.toUpperCase();
+        wantedWord = wantedWord.toUpperCase();
         HashMap<Character,Integer> Smap = new HashMap<Character,Integer>();
         HashMap<Character,Integer> Recmap = new HashMap<Character,Integer>();
-        //Smap.put('B',0);
-      //  Smap.put('A',0);
-      //  Smap.put('L',0);
-      //  Smap.put('O',0);
-      //  Smap.put('N',0);
 
-        for(int i = 0;i<rec.length();i++){
-            char c = rec.charAt(i);
+        for(int i = 0; i< wantedWord.length(); i++){
+            char c = wantedWord.charAt(i);
             if(c == ' '){
                 continue;
             }
@@ -41,8 +31,7 @@ public class SolutionAll {
             Smap.put(i,0);
         }
 
-
-        char[] chars = s.toCharArray();
+        char[] chars = inputString.toCharArray();
         for(int i=0;i<chars.length;i++){
             for(Character j : Smap.keySet()) {
                 if (j == chars[i]) {
@@ -51,25 +40,21 @@ public class SolutionAll {
                 }
             }
         }
-        HashMap<Character,Integer> Tempmap = new HashMap<Character,Integer>();
-        for(Character i : Recmap.keySet()){
-            for(Character j : Smap.keySet()){
-                Tempmap.put(i,Smap.get(j)/Recmap.get(i));
-            }
-        }
-        int[] tempArr = new int[Tempmap.size()];
-        for(int j = 0;j<Tempmap.size();j++){
-            for(Character i : Tempmap.keySet()){
-                tempArr[j] = Tempmap.get(i);
-            }
-        }
+            for(Character j : Smap.keySet()) {
 
+                Smap.compute(j, (k, v) -> v / Recmap.get(j));
+            }
+
+
+        int[] tempArr = new int[Smap.size()];
+        for(int j = 0;j<Smap.size();j++){
+            for(Character i : Smap.keySet()){
+                tempArr[j] = Smap.get(i);
+            }
+        }
         Arrays.sort(tempArr);
 
-
-        result = tempArr[0];
-
-        return result;
+        return tempArr[0];
     }
 
 }
