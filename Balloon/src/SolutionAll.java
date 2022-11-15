@@ -40,10 +40,10 @@ public class SolutionAll {
                 }
             }
         }
-            for(Character j : Smap.keySet()) {
+        for(Character j : Smap.keySet()) {
 
-                Smap.compute(j, (k, v) -> v / Recmap.get(j));
-            }
+            Smap.compute(j, (k, v) -> v / Recmap.get(j));
+        }
 
 
         int[] tempArr = new int[Smap.size()];
