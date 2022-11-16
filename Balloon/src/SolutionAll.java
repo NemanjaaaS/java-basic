@@ -1,3 +1,6 @@
+import Exceptions.IndexOutOfBound;
+import Exceptions.NoInputException;
+
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -9,11 +12,13 @@ public class SolutionAll {
         wantedWord = word;
     }
     public int solution(String S,String Rec){
-        int result = 0;
         inputString = inputString.toUpperCase();
         wantedWord = wantedWord.toUpperCase();
         HashMap<Character,Integer> Smap = new HashMap<Character,Integer>();
         HashMap<Character,Integer> Recmap = new HashMap<Character,Integer>();
+        if(inputString.length() == 0 || wantedWord.length() == 0){
+            throw new NoInputException("Inputed string or wanted word is empty!");
+        }
 
         for(int i = 0; i< wantedWord.length(); i++){
             char c = wantedWord.charAt(i);
@@ -32,14 +37,19 @@ public class SolutionAll {
         }
 
         char[] chars = inputString.toCharArray();
-        for(int i=0;i<chars.length;i++){
+
+        try{
+            for(int i=0;i<chars.length;i++){
             for(Character j : Smap.keySet()) {
                 if (j == chars[i]) {
                     Smap.compute(j, (k, v) -> v + 1);
 
                 }
             }
+        }}catch (IndexOutOfBound e){
+            System.out.println("Index out of bound, please check lengths!");
         }
+
         for(Character j : Smap.keySet()) {
 
             Smap.compute(j, (k, v) -> v / Recmap.get(j));
